@@ -1,0 +1,36 @@
+version: '3.9'
+
+services:
+  postgres:
+    image: 'postgres:16'
+    container_name: 'product-postgresql'
+    environment:
+      - 'POSTGRES_DB=PRODUCT'
+      - 'POSTGRES_PASSWORD=password'
+      - 'POSTGRES_USER=root'
+    ports:
+      - '5432:5432'
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - exception-handler-network
+  exception-handler:
+    image: exception-handler-image:latest
+    container_name: exception-handler
+    restart: on-failure
+    ports:
+      - 8080:8080
+    environment:
+      - 'POSTGRESQL_DB_URL=jdbc:postgresql://postgres:5432/PRODUCT'
+    depends_on:
+      - postgres
+    networks:
+      - exception-handler-network
+
+volumes:
+  postgres_data:
+    driver: local
+
+networks:
+  exception-handler-network:
+    driver: bridge

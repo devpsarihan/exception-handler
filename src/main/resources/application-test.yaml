@@ -1,0 +1,26 @@
+server:
+  port: 8081
+spring:
+  application:
+    name: exception-handler-app
+  jpa:
+    defer-datasource-initialization: false
+    show-sql: true
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    generate-ddl: false
+    hibernate:
+      naming:
+        physical-strategy: org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+      ddl-auto: update
+  datasource:
+    url: jdbc:postgresql://localhost:5432/PRODUCT
+    username: root
+    password: password
+  testcontainers:
+    enabled: true
+    reuse:
+      enabled: true
+
+springdoc:
+  swagger-ui:
+    path: /doc
