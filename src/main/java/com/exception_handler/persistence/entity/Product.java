@@ -8,6 +8,7 @@ import jakarta.persistence.Enumerated;
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.Table;
 import java.math.BigDecimal;
+import java.util.Objects;
 import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -48,7 +49,7 @@ public class Product extends BaseEntity {
 
     @PrePersist
     protected void onCreate() {
-        if (sku == null) {
+        if (Objects.nonNull(sku)) {
             sku = UUID.randomUUID();
         }
     }
